@@ -1,11 +1,12 @@
 -- CC Extension Schema (Phase 0 stubs)
 -- Separate schema to avoid collisions with Paperclip core tables.
 -- Columns are minimal stubs — populated in Phase 2 with real data.
+-- All statements are idempotent (IF NOT EXISTS) for safe re-runs.
 
 CREATE SCHEMA IF NOT EXISTS cc_ext;
 --> statement-breakpoint
 
-CREATE TABLE cc_ext.persona_traits (
+CREATE TABLE IF NOT EXISTS cc_ext.persona_traits (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   agent_id text NOT NULL,
   trait_name text NOT NULL,
@@ -14,20 +15,20 @@ CREATE TABLE cc_ext.persona_traits (
   created_at timestamp with time zone DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
-CREATE INDEX cc_ext_persona_traits_agent_idx ON cc_ext.persona_traits USING btree (agent_id);
+CREATE INDEX IF NOT EXISTS cc_ext_persona_traits_agent_idx ON cc_ext.persona_traits USING btree (agent_id);
 --> statement-breakpoint
 
-CREATE TABLE cc_ext.persona_snapshots (
+CREATE TABLE IF NOT EXISTS cc_ext.persona_snapshots (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   agent_id text NOT NULL,
   snapshot_data jsonb NOT NULL DEFAULT '{}',
   created_at timestamp with time zone DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
-CREATE INDEX cc_ext_persona_snapshots_agent_idx ON cc_ext.persona_snapshots USING btree (agent_id);
+CREATE INDEX IF NOT EXISTS cc_ext_persona_snapshots_agent_idx ON cc_ext.persona_snapshots USING btree (agent_id);
 --> statement-breakpoint
 
-CREATE TABLE cc_ext.preflight_log (
+CREATE TABLE IF NOT EXISTS cc_ext.preflight_log (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   agent_id text NOT NULL,
   task_id text,
@@ -36,14 +37,14 @@ CREATE TABLE cc_ext.preflight_log (
   created_at timestamp with time zone DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
-CREATE INDEX cc_ext_preflight_log_agent_idx ON cc_ext.preflight_log USING btree (agent_id);
+CREATE INDEX IF NOT EXISTS cc_ext_preflight_log_agent_idx ON cc_ext.preflight_log USING btree (agent_id);
 --> statement-breakpoint
 
-CREATE TABLE cc_ext.bridge_agent_persona (
+CREATE TABLE IF NOT EXISTS cc_ext.bridge_agent_persona (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   agent_id text NOT NULL UNIQUE,
   persona_id text NOT NULL,
   created_at timestamp with time zone DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
-CREATE INDEX cc_ext_bridge_agent_persona_agent_idx ON cc_ext.bridge_agent_persona USING btree (agent_id);
+CREATE INDEX IF NOT EXISTS cc_ext_bridge_agent_persona_agent_idx ON cc_ext.bridge_agent_persona USING btree (agent_id);
