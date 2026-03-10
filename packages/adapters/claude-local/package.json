@@ -3,10 +3,22 @@
   "version": "0.3.0",
   "type": "module",
   "exports": {
-    ".": "./src/index.ts",
-    "./server": "./src/server/index.ts",
-    "./ui": "./src/ui/index.ts",
-    "./cli": "./src/cli/index.ts"
+    ".": {
+      "development": "./src/index.ts",
+      "default": "./dist/index.js"
+    },
+    "./server": {
+      "development": "./src/server/index.ts",
+      "default": "./dist/server/index.js"
+    },
+    "./ui": {
+      "development": "./src/ui/index.ts",
+      "default": "./dist/ui/index.js"
+    },
+    "./cli": {
+      "development": "./src/cli/index.ts",
+      "default": "./dist/cli/index.js"
+    }
   },
   "publishConfig": {
     "access": "public",
