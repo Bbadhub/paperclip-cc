@@ -28,6 +28,12 @@ COPY . .
 RUN pnpm --filter @paperclipai/shared build
 RUN pnpm --filter @paperclipai/db build
 RUN pnpm --filter @paperclipai/adapter-utils build
+RUN pnpm --filter @paperclipai/adapter-claude-local build
+RUN pnpm --filter @paperclipai/adapter-codex-local build
+RUN pnpm --filter @paperclipai/adapter-cursor-local build
+RUN pnpm --filter @paperclipai/adapter-openclaw-gateway build
+RUN pnpm --filter @paperclipai/adapter-opencode-local build
+RUN pnpm --filter @paperclipai/adapter-pi-local build
 RUN pnpm --filter @paperclipai/ui build
 RUN pnpm --filter @paperclipai/server build
 RUN test -f server/dist/index.js || (echo "ERROR: server build output missing" && exit 1)
